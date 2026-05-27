@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan Teyvat · Genshin Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0d0c1a;
+  --bg2: #13112a;
+  --bg3: #1a1838;
+  --surface: rgba(255,255,255,0.04);
+  --surface2: rgba(255,255,255,0.07);
+  --surface3: rgba(255,255,255,0.11);
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --gold: #c8a96e;
+  --gold-light: #f0d9a8;
+  --gold-dim: rgba(200,169,110,0.25);
+  --purple: #7f77dd;
+  --purple-light: #afa9ec;
+  --text: #e8e4d8;
+  --text2: #9b9680;
+  --text3: #5e5c52;
+  --pyro: #e8734a;
+  --hydro: #4a9cd4;
+  --cryo: #6ec5c5;
+  --electro: #9b72d4;
+  --anemo: #48c5a0;
+  --geo: #d4a74a;
+  --dendro: #78c44a;
+  --radius: 10px;
+  --radius-lg: 16px;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Starfield BG ── */
+.stars {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(127,119,221,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 70%, rgba(72,197,160,0.05) 0%, transparent 60%);
+}
+.stars::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 45% 10%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 35%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 15%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 10% 85%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 55%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 55% 45%, rgba(200,169,110,0.5) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 25% 75%, rgba(200,169,110,0.3) 0%, transparent 100%);
+}
+
+/* ── Layout ── */
+.app { position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 100vh; }
+
+/* ── Header ── */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,12,26,0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logo-icon {
+  width: 34px; height: 34px;
+  background: linear-gradient(135deg, var(--gold) 0%, #e8c98a 100%);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: #1a1040;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+}
+.logo-text { line-height: 1.1; }
+.logo-name {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  color: var(--gold-light);
+  letter-spacing: 2px;
+}
+.logo-sub { font-size: 10px; color: var(--text3); letter-spacing: 1px; }
+
+.search-wrap {
+  flex: 1;
+  max-width: 360px;
+  position: relative;
+}
+.search-wrap input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 8px 16px 8px 40px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: 'Noto Sans SC', sans-serif;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.search-wrap input:focus {
+  border-color: var(--gold-dim);
+  background: var(--surface2);
+}
+.search-wrap input::placeholder { color: var(--text3); }
+.search-icon {
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text3);
+  font-size: 15px;
+  pointer-events: none;
+}
+
+.header-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.version-badge {
+  font-size: 11px;
+  padding: 3px 10px;
+  background: var(--gold-dim);
+  color: var(--gold-light);
+  border-radius: 24px;
+  border: 1px solid rgba(200,169,110,0.2);
+}
+
+/* ── Nav Tabs ── */
+.nav-bar {
+  background: rgba(13,12,26,0.6);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+}
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-tab {
+  padding: 14px 20px;
+  font-size: 13px;
+  color: var(--text2);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  transition: color 0.2s;
+  user-select: none;
+}
+.nav-tab:hover { color: var(--text); }
+.nav-tab.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+.nav-tab svg { width: 15px; height: 15px; opacity: 0.8; }
+
+/* ── Main ── */
+main {
+  flex: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 32px 24px 80px;
+}
+
+/* ── Section headings ── */
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.section-head h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  color: var(--gold-light);
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+.section-head::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--border2), transparent);
+}
+
+/* ── Page (tabs) ── */
+.page { display: none; }
+.page.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── Tier List ── */
+.tier-block { margin-bottom: 28px; }
+.tier-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.tier-badge {
+  width: 44px;
+  min-height: 44px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.tier-s { background: linear-gradient(135deg,#7b4f00,#c8860a); color: #ffe8a0; }
+.tier-a { background: linear-gradient(135deg,#3a1d6e,#7f77dd); color: #e0dcff; }
+.tier-b { background: linear-gradient(135deg,#0f3d5c,#3a82b8); color: #c0dfff; }
+.tier-c { background: linear-gradient(135deg,#1e3a1e,#3a7a3a); color: #c0f0c0; }
+.tier-chars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex: 1;
+}
+
+/* ── Character Card ── */
+.char-card {
+  width: 86px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.char-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.char-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+.char-card:hover::before { opacity: 1; }
+.char-card.selected {
+  border-color: var(--gold);
+  background: rgba(200,169,110,0.08);
+}
+.char-card.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 4px; right: 6px;
+  font-size: 10px;
+  color: var(--gold);
+}
+
+.char-avatar {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  margin: 0 auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  position: relative;
+  border: 2px solid rgba(255,255,255,0.08);
+}
+.pyro-bg { background: rgba(232,115,74,0.15); border-color: rgba(232,115,74,0.3); }
+.hydro-bg { background: rgba(74,156,212,0.15); border-color: rgba(74,156,212,0.3); }
+.cryo-bg { background: rgba(110,197,197,0.15); border-color: rgba(110,197,197,0.3); }
+.electro-bg { background: rgba(155,114,212,0.15); border-color: rgba(155,114,212,0.3); }
+.anemo-bg { background: rgba(72,197,160,0.15); border-color: rgba(72,197,160,0.3); }
+.geo-bg { background: rgba(212,167,74,0.15); border-color: rgba(212,167,74,0.3); }
+.dendro-bg { background: rgba(120,196,74,0.15); border-color: rgba(120,196,74,0.3); }
+
+.elem-dot {
+  position: absolute;
+  bottom: 1px; right: 1px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--bg);
+  font-size: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.dot-pyro { background: var(--pyro); }
+.dot-hydro { background: var(--hydro); }
+.dot-cryo { background: var(--cryo); }
+.dot-electro { background: var(--electro); }
+.dot-anemo { background: var(--anemo); }
+.dot-geo { background: var(--geo); }
+.dot-dendro { background: var(--dendro); }
+
+.char-name { font-size: 12px; color: var(--text); font-weight: 500; }
+.char-role { font-size: 10px; color: var(--text3); margin-top: 2px; }
+
+/* ── Detail Panel ── */
+.detail-panel {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 28px;
+  display: none;
+  animation: fadeIn 0.25s ease;
+}
+.detail-panel.open { display: block; }
+
+.dp-header {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.dp-avatar {
+  width: 68px; height: 68px;
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.dp-info { flex: 1; }
+.dp-name {
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  color: var(--gold-light);
+  margin-bottom: 8px;
+}
+.dp-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 24px;
+  font-weight: 500;
+}
+.tag-tier-s { background: rgba(200,138,10,0.2); color: #f0c060; border: 1px solid rgba(200,138,10,0.3); }
+.tag-tier-a { background: rgba(127,119,221,0.2); color: var(--purple-light); border: 1px solid rgba(127,119,221,0.3); }
+.tag-tier-b { background: rgba(74,156,212,0.2); color: #90c8f0; border: 1px solid rgba(74,156,212,0.3); }
+.tag-elem { background: var(--surface2); color: var(--text2); border: 1px solid var(--border); }
+.tag-role { background: var(--surface); color: var(--text2); border: 1px solid var(--border); }
+
+.dp-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+@media (min-width: 600px) { .dp-stats { grid-template-columns: repeat(4, 1fr); } }
+.stat-item {
+  background: var(--surface2);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+}
+.stat-label { font-size: 10px; color: var(--text3); margin-bottom: 4px; letter-spacing: 0.5px; }
+.stat-val { font-size: 13px; color: var(--text); font-weight: 500; }
+
+.dp-synergy { margin-bottom: 16px; }
+.synergy-title { font-size: 12px; color: var(--text3); margin-bottom: 8px; letter-spacing: 0.5px; }
+.synergy-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.synergy-chip {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 24px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.dp-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, rgba(200,169,110,0.2), rgba(200,169,110,0.1));
+  border: 1px solid rgba(200,169,110,0.35);
+  border-radius: var(--radius);
+  color: var(--gold-light);
+  font-size: 13px;
+  font-family: 'Noto Sans SC', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-primary:hover { background: linear-gradient(135deg, rgba(200,169,110,0.3), rgba(200,169,110,0.15)); transform: translateY(-1px); }
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text2);
+  font-size: 13px;
+  font-family: 'Noto Sans SC', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-secondary:hover { border-color: var(--border2); color: var(--text); }
+
+/* ── Team Builder ── */
+.team-cards { display: flex; flex-direction: column; gap: 16px; }
+.team-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  transition: border-color 0.2s;
+}
+.team-card:hover { border-color: var(--border2); }
+.team-card-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.team-title {
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  color: var(--gold-light);
+  font-weight: 600;
+}
+.team-subtitle { font-size: 12px; color: var(--text3); }
+.team-rating {
+  margin-left: auto;
+  font-size: 11px;
+  padding: 2px 10px;
+  border-radius: 24px;
+  background: rgba(200,138,10,0.15);
+  color: #f0c060;
+  border: 1px solid rgba(200,138,10,0.25);
+}
+
+.team-slots {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.team-slot {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 8px;
+  text-align: center;
+}
+.slot-emoji { font-size: 26px; margin-bottom: 6px; }
+.slot-name { font-size: 12px; color: var(--text); font-weight: 500; }
+.slot-role { font-size: 10px; color: var(--text3); margin-top: 2px; }
+
+.team-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.meta-label { font-size: 11px; color: var(--text3); }
+.reaction-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 24px;
+  font-weight: 500;
+}
+.rt-vaporize { background: rgba(232,115,74,0.15); color: #f0a080; border: 1px solid rgba(232,115,74,0.25); }
+.rt-melt { background: rgba(110,197,197,0.15); color: #90e0e0; border: 1px solid rgba(110,197,197,0.25); }
+.rt-hyperbloom { background: rgba(120,196,74,0.15); color: #a0e870; border: 1px solid rgba(120,196,74,0.25); }
+.rt-freeze { background: rgba(74,156,212,0.15); color: #90c8f0; border: 1px solid rgba(74,156,212,0.25); }
+.rt-quicken { background: rgba(155,114,212,0.15); color: #c8a0f0; border: 1px solid rgba(155,114,212,0.25); }
+.rt-aggravate { background: rgba(155,114,212,0.1); color: #b090e0; border: 1px solid rgba(155,114,212,0.2); }
+
+/* ── Tips (novice guide) ── */
+.tips-intro {
+  background: linear-gradient(135deg, rgba(127,119,221,0.08), rgba(72,197,160,0.05));
+  border: 1px solid rgba(127,119,221,0.15);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  margin-bottom: 28px;
+}
+.tips-intro p { font-size: 14px; color: var(--text2); line-height: 1.8; }
+.tips-intro strong { color: var(--gold-light); }
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+@media (min-width: 600px) { .tips-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 900px) { .tips-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.tip-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.tip-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+.tip-icon {
+  width: 36px; height: 36px;
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+.tip-icon-gold { background: rgba(200,169,110,0.12); }
+.tip-icon-purple { background: rgba(127,119,221,0.12); }
+.tip-icon-teal { background: rgba(72,197,160,0.12); }
+.tip-icon-blue { background: rgba(74,156,212,0.12); }
+.tip-icon-red { background: rgba(232,115,74,0.12); }
+.tip-icon-green { background: rgba(120,196,74,0.12); }
+
+.tip-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.tip-desc { font-size: 13px; color: var(--text2); line-height: 1.7; }
+.tip-badge {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 24px;
+  background: var(--surface2);
+  color: var(--text3);
+  border: 1px solid var(--border);
+}
+
+/* ── FAQ accordion ── */
+.faq { margin-top: 10px; }
+.faq-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.faq-q {
+  padding: 14px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--surface);
+  transition: background 0.2s;
+  user-select: none;
+}
+.faq-q:hover { background: var(--surface2); }
+.faq-q .arrow {
+  font-size: 12px;
+  color: var(--text3);
+  transition: transform 0.25s;
+  flex-shrink: 0;
+}
+.faq-item.open .faq-q .arrow { transform: rotate(180deg); }
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: var(--bg2);
+}
+.faq-a-inner { padding: 14px 16px; font-size: 13px; color: var(--text2); line-height: 1.8; }
+.faq-item.open .faq-a { max-height: 300px; }
+
+/* ── Abyss (螺旋) ── */
+.abyss-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+@media (min-width: 700px) { .abyss-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.abyss-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.abyss-card:hover { border-color: var(--gold-dim); transform: translateY(-2px); }
+.abyss-floor {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  color: var(--gold-light);
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+.abyss-sub { font-size: 11px; color: var(--text3); margin-bottom: 12px; }
+.abyss-stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; }
+.abyss-stars .empty { opacity: 0.2; }
+.abyss-diff {
+  margin-top: 10px;
+  font-size: 10px;
+  padding: 2px 10px;
+  border-radius: 24px;
+}
+.diff-hard { background: rgba(232,115,74,0.15); color: #f0a080; border: 1px solid rgba(232,115,74,0.2); }
+.diff-med { background: rgba(200,138,10,0.12); color: #f0c060; border: 1px solid rgba(200,138,10,0.2); }
+.diff-easy { background: rgba(120,196,74,0.12); color: #a0e870; border: 1px solid rgba(120,196,74,0.2); }
+
+.abyss-detail {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: none;
+  animation: fadeIn 0.25s ease;
+}
+.abyss-detail.open { display: block; }
+.abyss-half { margin-bottom: 16px; }
+.abyss-half-title {
+  font-size: 12px;
+  color: var(--text3);
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.enemy-list { display: flex; gap: 8px; flex-wrap: wrap; }
+.enemy-chip {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 24px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text2);
+}
+.enemy-chip.elite { border-color: rgba(232,115,74,0.3); color: #f0a080; background: rgba(232,115,74,0.08); }
+.recommended-chars { margin-top: 12px; }
+.rec-label { font-size: 12px; color: var(--text3); margin-bottom: 8px; }
+.rec-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.rec-chip {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 24px;
+  background: rgba(200,169,110,0.08);
+  border: 1px solid rgba(200,169,110,0.2);
+  color: var(--gold-light);
+}
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 24px;
+  text-align: center;
+}
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-text { font-size: 12px; color: var(--text3); line-height: 1.8; }
+.footer-text a { color: var(--text2); text-decoration: none; }
+.footer-text a:hover { color: var(--gold-light); }
+
+/* ── Scroll to top ── */
+.scroll-top {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.2s;
+  z-index: 200;
+}
+.scroll-top.visible { opacity: 1; pointer-events: auto; }
+.scroll-top:hover { transform: translateY(-2px); color: var(--gold-light); }
+
+/* ── Search results overlay ── */
+.search-results {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0; right: 0;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  z-index: 999;
+  display: none;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.search-results.open { display: block; }
+.sr-item {
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-size: 13px;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+.sr-item:last-child { border-bottom: none; }
+.sr-item:hover { background: var(--surface2); }
+.sr-emoji { font-size: 18px; }
+.sr-sub { font-size: 11px; color: var(--text3); margin-left: auto; }
+.sr-empty { padding: 16px; text-align: center; color: var(--text3); font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="app">
+
+<!-- Header -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#" onclick="switchPage('tier');return false;">
+      <div class="logo-icon">✦</div>
+      <div class="logo-text">
+        <div class="logo-name">Panduan Teyvat</div>
+        <div class="logo-sub">GENSHIN GUIDE</div>
+      </div>
+    </a>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Cari karakter, tim, panduan…" autocomplete="off">
+      <div class="search-results" id="search-results"></div>
+    </div>
+    <div class="header-right">
+      <div class="version-badge">Ver 5.4</div>
+    </div>
+  </div>
+</header>
+
+<!-- Nav -->
+<div class="nav-bar">
+  <div class="nav-inner">
+    <div class="nav-tab active" data-page="tier" onclick="switchPage('tier')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      Tier List
+    </div>
+    <div class="nav-tab" data-page="team" onclick="switchPage('team')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Susunan Tim
+    </div>
+    <div class="nav-tab" data-page="abyss" onclick="switchPage('abyss')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Spiral Abyss
+    </div>
+    <div class="nav-tab" data-page="tips" onclick="switchPage('tips')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Panduan Pemula
+    </div>
+  </div>
+</div>
+
+<main>
+
+<!-- ═══ PAGE: Tier List ═══ -->
+<div class="page active" id="page-tier">
+  <div class="section-head"><h2>TIER LIST KARAKTER</h2></div>
+  <div id="detail-panel" class="detail-panel"></div>
+  <div id="tier-list"></div>
+</div>
+
+<!-- ═══ PAGE: Team Builder ═══ -->
+<div class="page" id="page-team">
+  <div class="section-head"><h2>REKOMENDASI TIM</h2></div>
+  <div class="team-cards" id="team-list"></div>
+</div>
+
+<!-- ═══ PAGE: Abyss ═══ -->
+<div class="page" id="page-abyss">
+  <div class="section-head"><h2>SPIRAL ABYSS</h2></div>
+  <p style="font-size:13px;color:var(--text3);margin-bottom:20px;">Data versi 5.4 — klik lantai untuk melihat detail musuh dan rekomendasi tim</p>
+  <div class="abyss-grid" id="abyss-grid"></div>
+  <div class="abyss-detail" id="abyss-detail"></div>
+</div>
+
+<!-- ═══ PAGE: Tips ═══ -->
+<div class="page" id="page-tips">
+  <div class="section-head"><h2>PANDUAN PEMULA</h2></div>
+  <div class="tips-intro">
+    <p>Selamat datang di Teyvat! Sebagai Traveler baru, panduan ini akan membantumu mulai dengan cepat. Yang paling penting: <strong>jangan terburu-buru wish</strong>, simpan dulu Primogem-mu; <strong>Resin</strong> adalah sumber daya paling berharga; susunan tim yang baik lebih penting daripada karakter kuat satu-satunya.</p>
+  </div>
+  <div class="tips-grid" id="tips-grid"></div>
+  <div class="section-head" style="margin-top:16px;"><h2>PERTANYAAN UMUM (FAQ)</h2></div>
+  <div class="faq" id="faq"></div>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <p class="footer-text">
+      Panduan Teyvat · Data hanya untuk referensi, versi 5.4 · Situs tidak resmi<br>
+      Genshin Impact adalah hak cipta <a href="#">miHoYo / HoYoverse</a>
+    </p>
+  </div>
+</footer>
+
+<div class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════ */
+const ELEM = {
+  pyro:    { name:'Pyro', color:'var(--pyro)', dot:'dot-pyro', bg:'pyro-bg', symbol:'🔥' },
+  hydro:   { name:'Hydro', color:'var(--hydro)', dot:'dot-hydro', bg:'hydro-bg', symbol:'💧' },
+  cryo:    { name:'Cryo', color:'var(--cryo)', dot:'dot-cryo', bg:'cryo-bg', symbol:'❄️' },
+  electro: { name:'Electro', color:'var(--electro)', dot:'dot-electro', bg:'electro-bg', symbol:'⚡' },
+  anemo:   { name:'Anemo', color:'var(--anemo)', dot:'dot-anemo', bg:'anemo-bg', symbol:'🌀' },
+  geo:     { name:'Geo', color:'var(--geo)', dot:'dot-geo', bg:'geo-bg', symbol:'🪨' },
+  dendro:  { name:'Dendro', color:'var(--dendro)', dot:'dot-dendro', bg:'dendro-bg', symbol:'🌿' },
+};
+
+const CHARS = [
+  { id:'hutao',     name:'Hu Tao',       emoji:'🌸', elem:'pyro',    role:'Main DPS',   tier:'s', star:5, weapon:'Polearm',    artifact:'Crimson Witch of Flames', ascend:'CRIT Rate',  talent:'Normal Atk > Skill > Burst',   synergy:['Xingqiu','Kazuha','Zhongli','Yelan'],  desc:'Main DPS Pyro dengan burst damage tinggi. Serangan meningkat drastis saat HP rendah — salah satu output terkuat untuk tim Vaporize.' },
+  { id:'nahida',    name:'Nahida',       emoji:'🌸', elem:'dendro',  role:'Dendro Support', tier:'s', star:5, weapon:'Catalyst', artifact:'Deepwood Memories', ascend:'Elemental Mastery', talent:'Burst > Skill > Normal Atk', synergy:['Raiden Shogun','Furina','Xingqiu','Yelan'], desc:'Support Dendro terkuat. Inti tim Hyperbloom/Quicken, Skill-nya sangat efisien untuk menyebarkan elemen Dendro.' },
+  { id:'furina',    name:'Furina',       emoji:'👑', elem:'hydro',   role:'Hydro Support', tier:'s', star:5, weapon:'Sword',   artifact:'Golden Troupe',    ascend:'CRIT Rate',  talent:'Burst > Skill > Normal Atk',   synergy:['Kazuha','Hu Tao','Nahida','Zhongli'], desc:'Memberikan bonus damage besar dan healing. Stacknya naik saat HP anggota tim berubah — Burst-nya sangat meningkatkan damage tim.' },
+  { id:'kazuha',    name:'Kazuha',       emoji:'🍁', elem:'anemo',   role:'Anemo Support', tier:'s', star:5, weapon:'Sword',   artifact:'Viridescent Venerer', ascend:'Elemental Mastery', talent:'Burst > Skill > Normal Atk', synergy:['Hu Tao','Furina','Raiden Shogun','Xiangling'], desc:'Support Anemo terbaik. Bonus Elemental Mastery diteruskan ke seluruh tim lewat 4-set Viridescent Venerer untuk meningkatkan elemental damage.' },
+  { id:'zhongli',   name:'Zhongli',      emoji:'🏛', elem:'geo',     role:'Shield Support', tier:'s', star:5, weapon:'Polearm', artifact:'Tenacity of the Millelith', ascend:'HP',       talent:'Skill > Burst > Normal Atk',   synergy:['Hu Tao','Wanderer','Yae Miko','Raiden Shogun'], desc:'Shield terkuat di game, sekaligus memberikan Resistance shred. Pilihan utama untuk melindungi Main DPS agar output tidak terganggu.' },
+  { id:'wanderer',  name:'Wanderer',     emoji:'🎭', elem:'anemo',   role:'Main DPS',   tier:'s', star:5, weapon:'Catalyst', artifact:'Desert Pavilion Chronicle', ascend:'CRIT Rate', talent:'Normal Atk > Skill > Burst', synergy:['Zhongli','Faruzan','Nahida','Yelan'], desc:'Main DPS Anemo yang output-nya stabil saat melayang. Damage meningkat besar saat mendapat bonus Pyro atau Hydro.' },
+  { id:'neuvillette',name:'Neuvillette', emoji:'🐉', elem:'hydro',   role:'Main DPS',   tier:'s', star:5, weapon:'Catalyst', artifact:'Golden Troupe',    ascend:'CRIT Rate',  talent:'Normal Atk > Burst > Skill',   synergy:['Furina','Kazuha','Nahida','Zhongli'], desc:'Charged Attack-nya menimbulkan Hydro AoE besar. Mekanisme unik dan sangat efektif melawan banyak musuh sekaligus.' },
+  { id:'yoimiya',   name:'Yoimiya',      emoji:'🎆', elem:'pyro',    role:'Main DPS',   tier:'a', star:5, weapon:'Bow',      artifact:'Crimson Witch of Flames', ascend:'CRIT Rate', talent:'Normal Atk > Burst > Skill', synergy:['Xingqiu','Kazuha','Bennett','Beidou'], desc:'Main DPS Pyro jarak jauh. Normal Attack-nya diinfus Pyro, sangat kuat untuk single-target Vaporize, tapi kurang optimal melawan banyak musuh.' },
+  { id:'raiden',    name:'Raiden Shogun',emoji:'⚡', elem:'electro', role:'Electro Support / Main DPS', tier:'a', star:5, weapon:'Polearm', artifact:'Emblem of Severed Fate', ascend:'CRIT Rate', talent:'Burst > Skill > Normal Atk', synergy:['Kazuha','Nahida','Bennett','Furina'], desc:'Bisa jadi support maupun Main DPS. Burst-nya sangat kuat dan membantu isi Burst anggota tim — inti dari National Team.' },
+  { id:'ganyu',     name:'Ganyu',        emoji:'🦌', elem:'cryo',    role:'Main DPS',   tier:'a', star:5, weapon:'Bow',      artifact:'Blizzard Strayer', ascend:'CRIT Rate',  talent:'Normal Atk > Burst > Skill',   synergy:['Kazuha','Xingqiu','Shenhe','Mona'], desc:'Main DPS Cryo. Charged Attack level 2-nya menghasilkan CRIT damage sangat tinggi — hebat di tim Melt maupun Freeze.' },
+  { id:'xiao',      name:'Xiao',         emoji:'🐉', elem:'anemo',   role:'Main DPS',   tier:'a', star:5, weapon:'Polearm', artifact:'Vermillion Hereafter', ascend:'CRIT Rate', talent:'Normal Atk > Skill > Burst', synergy:['Faruzan','Furina','Zhongli'], desc:'Main DPS Anemo dengan polearm. Selama Burst aktif, terus loncat dan keluarkan damage besar meski HP terus berkurang.' },
+  { id:'yelan',     name:'Yelan',        emoji:'🌊', elem:'hydro',   role:'Hydro Support', tier:'a', star:5, weapon:'Bow',    artifact:'Emblem of Severed Fate', ascend:'HP',       talent:'Burst > Skill > Normal Atk',   synergy:['Hu Tao','Neuvillette','Ayaka','Furina'], desc:'Support Hydro yang Burst-nya terus-menerus mengaplikasikan Hydro dan memberikan bonus damage — sering dipasangkan bersama Xingqiu.' },
+  { id:'xingqiu',   name:'Xingqiu',      emoji:'💦', elem:'hydro',   role:'Hydro Support', tier:'a', star:4, weapon:'Sword',  artifact:'Emblem of Severed Fate', ascend:'ATK',      talent:'Burst > Skill > Normal Atk',   synergy:['Hu Tao','Xiangling','Raiden Shogun','Bennett'], desc:'Support Hydro 4-bintang terbaik. Burst-nya terus mengaplikasikan Hydro mengikuti serangan Main DPS — wajib ada di tim Vaporize/Quicken.' },
+  { id:'raize',     name:'Razor',        emoji:'🐺', elem:'electro', role:'Main DPS',   tier:'b', star:4, weapon:'Claymore', artifact:'Thundering Fury',  ascend:'CRIT Rate',  talent:'Normal Atk > Burst > Skill',   synergy:['Nahida','Xingqiu','Fischl','Bennett'], desc:'Main DPS Electro. Burst-nya menginfus Electro dan mempercepat isi energi — damage Quicken-nya cukup signifikan.' },
+  { id:'bennett',   name:'Bennett',      emoji:'🌟', elem:'pyro',    role:'Healer Support', tier:'b', star:4, weapon:'Sword', artifact:'Noblesse Oblige', ascend:'HP',          talent:'Burst > Skill > Normal Atk',   synergy:['Xiangling','Hu Tao','Yoimiya','Kazuha'], desc:'Support 4-bintang terkuat. Burst-nya di dalam lingkaran menyembuhkan dan meningkatkan ATK secara besar — hampir semua tim Pyro wajib bawa Bennett.' },
+  { id:'xiangling',  name:'Xiangling',  emoji:'🔥', elem:'pyro',    role:'Pyro Support', tier:'b', star:4, weapon:'Polearm', artifact:'Emblem of Severed Fate', ascend:'CRIT Rate', talent:'Burst > Skill > Normal Atk', synergy:['Xingqiu','Bennett','Kazuha','Razor'], desc:'Support Pyro off-field. Burst-nya terus mengaplikasikan Pyro tanpa perlu Main DPS tukar posisi — salah satu support gratis terkuat.' },
+  { id:'fischl',     name:'Fischl',     emoji:'🦅', elem:'electro', role:'Electro Support', tier:'b', star:4, weapon:'Bow',  artifact:'Thundering Fury',  ascend:'ATK',         talent:'Skill > Burst > Normal Atk',   synergy:['Razor','Nahida','Xingqiu','Kazuha'], desc:'Support Electro off-field. Oz terus-menerus menyerang dengan Electro — wajib ada di tim Quicken dan Electro Charged.' },
+];
+
+const TEAMS = [
+  {
+    name:'Hu Tao Vaporize', sub:'Tim Internasional · Burst Damage Tinggi',  rating:'T0',
+    slots:[
+      { emoji:'🌸', name:'Hu Tao',   role:'Main DPS' },
+      { emoji:'💦', name:'Xingqiu',  role:'Hydro Support' },
+      { emoji:'🌊', name:'Yelan',    role:'Hydro Support' },
+      { emoji:'🍁', name:'Kazuha',   role:'Anemo Support' },
+    ],
+    reactions:['rt-vaporize:Vaporize ×1.5'],
+    desc:'Xingqiu/Yelan terus mengaplikasikan Hydro saat Hu Tao menyerang — memicu Vaporize. Kazuha mengumpulkan musuh dan meningkatkan elemental damage. Rotasi stabil dengan puncak burst yang sangat tinggi.',
+    tips:['Jaga HP Hu Tao tetap rendah untuk aktifkan passive-nya','Aktifkan Burst Xingqiu dulu, baru lanjutkan Skill Hu Tao','Gunakan Skill Kazuha untuk kumpulkan musuh sebelum Hu Tao menyerang']
+  },
+  {
+    name:'Neuvillette AoE Control', sub:'Hydro Dragon · Multi-Target',  rating:'T0',
+    slots:[
+      { emoji:'🐉', name:'Neuvillette', role:'Main DPS' },
+      { emoji:'👑', name:'Furina',      role:'Hydro Support' },
+      { emoji:'🍁', name:'Kazuha',      role:'Anemo Support' },
+      { emoji:'🏛', name:'Zhongli',     role:'Shield Support' },
+    ],
+    reactions:['rt-freeze:Hydro Application'],
+    desc:'Charged Attack Neuvillette menyapu seluruh arena. Furina memberikan bonus damage besar, Kazuha menurunkan Resistance musuh, Zhongli memastikan output tidak terganggu. Sangat efektif melawan banyak musuh.',
+    tips:['Aktifkan Furina dan Kazuha dulu sebelum switch ke Neuvillette','Terus bergerak saat Charged Attack untuk menghindari serangan musuh','Gunakan Shield Zhongli untuk bertahan saat posisi tetap']
+  },
+  {
+    name:'Hyperbloom Electro-Dendro-Hydro', sub:'Dendro-Hydro-Electro · Output Stabil',  rating:'T0',
+    slots:[
+      { emoji:'🌸', name:'Nahida',        role:'Dendro Support' },
+      { emoji:'⚡', name:'Raiden Shogun',  role:'Electro Support' },
+      { emoji:'👑', name:'Furina',         role:'Hydro Support' },
+      { emoji:'🏛', name:'Zhongli',        role:'Shield Support' },
+    ],
+    reactions:['rt-hyperbloom:Hyperbloom','rt-quicken:Quicken'],
+    desc:'Nahida mengaplikasikan Dendro, Raiden Shogun memicu Hyperbloom (ledakan benih), Furina mengaplikasikan Hydro untuk mengaktifkan passive bonus Nahida, Zhongli menurunkan Resistance dan melindungi tim.',
+    tips:['Tahan Skill Nahida (hold) untuk menandai banyak musuh sekaligus','Raiden Shogun Burst setelah energi penuh untuk memicu Hyperbloom','Aktifkan Burst Furina terlebih dahulu agar bonus damage aktif']
+  },
+  {
+    name:'Wanderer + Kazuha', sub:'Anemo Main DPS · Melayang',  rating:'T1',
+    slots:[
+      { emoji:'🎭', name:'Wanderer', role:'Main DPS' },
+      { emoji:'🍁', name:'Kazuha',   role:'Anemo Support' },
+      { emoji:'🌟', name:'Bennett',  role:'Healer Support' },
+      { emoji:'🏛', name:'Zhongli',  role:'Shield Support' },
+    ],
+    reactions:['rt-vaporize:Pyro Infusion'],
+    desc:'Bennett memberikan Pyro infusion sehingga serangan Wanderer memicu bonus dual-element Anemo-Pyro, Kazuha menurunkan Resistance, Wanderer melayang dan menyerang tanpa gangguan.',
+    tips:['Masuk lingkaran Bennett untuk mendapat Pyro buff dulu','Aktifkan Skill Wanderer untuk masuk mode melayang, lalu keluarkan Normal Attack penuh','Gunakan Kazuha untuk kumpulkan musuh sebelum Wanderer turun']
+  },
+];
+
+const ABYSS = [
+  { floor:9,  half1:{ enemies:['Black Serpent Knight','Hilichurl Shaman','Shield Hilichurl'], elites:[] }, half2:{ enemies:['Pyro Specter','Cryo Specter'], elites:[] }, rec:['Xiangling','Xingqiu','Bennett'], diff:'easy', stars:[3,3] },
+  { floor:10, half1:{ enemies:['Pyro Abyss Herald', 'Cryo Abyss Herald'], elites:['Electro Abyss Mage'] }, half2:{ enemies:['Treasure Hoarder Elite','Ruin Guard'], elites:['Ruin Hunter'] }, rec:['Nahida','Raiden Shogun','Kazuha'], diff:'med', stars:[2,3] },
+  { floor:11, half1:{ enemies:['Fatui Skirmisher','Fatui Pyro Agent'], elites:['Childe Phase 2'] }, half2:{ enemies:['Cryo Abyss Herald','Electro Abyss Herald'], elites:['Geo Abyss Mage'] }, rec:['Hu Tao','Nahida','Furina'], diff:'med', stars:[2,2] },
+  { floor:12, half1:{ enemies:['Magatsu Mitake Narukami no Mikoto'], elites:['Magatsu Phase 2'] }, half2:{ enemies:['Andrius','Hydro Specter'], elites:['Dendro Hypostasis'] }, rec:['Neuvillette','Kazuha','Zhongli','Wanderer'], diff:'hard', stars:[1,2] },
+];
+
+const TIPS = [
+  { icon:'⭐', cls:'tip-icon-gold',   title:'Sistem Wish & Pity (Jaminan)', desc:'Pity 5★ adalah 90 Wish (soft pity mulai naik dari Wish ke-74). Di Character Banner, 5★ punya 50% kemungkinan menjadi Limited Character. Jika tidak dapat, berikutnya pasti Limited (disebut "guaranteed"). Weapon Banner memiliki pity terpisah.', badge:'Mekanisme Inti' },
+  { icon:'💎', cls:'tip-icon-purple', title:'Strategi Penggunaan Resin', desc:'Resin Murni harian 160 butir, pulih 1 tiap 8 menit. Prioritas awal: domain Talent Material (Senin/Rabu/Sabtu) → Weapon Ascension (Selasa/Kamis/Minggu) → Artifact domain (untuk pemain lanjut).', badge:'Efisiensi Farming' },
+  { icon:'🧪', cls:'tip-icon-teal',   title:'Panduan Elemental Reaction', desc:'Vaporize (Pyro + Hydro) dan Melt (Pyro + Cryo) adalah reaction dengan multiplier damage tertinggi (1.5× dan 2×). Quicken (Dendro + Electro) menghasilkan bola Dendro tambahan. Hyperbloom (Dendro + Hydro + Electro) memicu ledakan benih.', badge:'Kunci Damage' },
+  { icon:'🛡', cls:'tip-icon-blue',   title:'Prioritas Upgrade Artifact', desc:'Main stat: Flower/Feather sudah tetap → Sands (ATK%/EM/ER) → Goblet (Elemental DMG%/ATK%) → Circlet (CRIT Rate/CRIT DMG). Sub-stat terbaik: double CRIT (CRIT Rate + CRIT DMG), lalu ATK% dan Elemental Mastery.', badge:'Wajib Baca' },
+  { icon:'⚔', cls:'tip-icon-red',    title:'Prinsip Menyusun Tim', desc:'Susunan standar: Main DPS (damage utama) + Sub-DPS (damage/aplikasi elemen) + Support (energi/damage boost) + Healer/Shield. Elemental Resonance memberikan bonus pasif tim, contoh Double Pyro +25% ATK.', badge:'Dasar Tim' },
+  { icon:'🗺', cls:'tip-icon-green',  title:'Jalur Progres Pemula', desc:'Tujuan: selesaikan Main Story (buka peta) → Adventure Rank 16 untuk buka domain → Daily Commission untuk material farming → AR45 mulai farming Artifact serius → tantang Spiral Abyss Floor 9-12.', badge:'Rencana Progress' },
+];
+
+const FAQ = [
+  { q:'Seberapa besar perbedaan karakter 4★ dan 5★?', a:'Perbedaannya ada, tapi bukan sesuatu yang tidak bisa diatasi. Karakter 4★ dengan Constellation tinggi (seperti Xingqiu, Xiangling) bahkan bisa lebih unggul dari kebanyakan 5★ sebagai support inti. Untuk pemula, fokus kembangkan karakter 4★ gratis terlebih dahulu — jauh lebih hemat daripada langsung wish.' },
+  { q:'Sebaiknya Primogem ditabung atau langsung dipakai?', a:'Disarankan dikumpulkan dan dipakai saat banner Limited Character yang kamu inginkan muncul. Pakai dulu free Wish harian (dari welkin, event, dll), lalu simpan Primogem untuk karakter favoritmu saat rerun atau limited baru. Jangan habiskan di Standard Banner.' },
+  { q:'Apakah Spiral Abyss Floor 12 sulit? Perlu dicoba pemula?', a:'Floor 12 memerlukan dua tim dengan karakter yang sudah dikembangkan dengan baik. Pemula sebaiknya fokus dulu di Floor 9-10 untuk mendapatkan resource, tingkatkan karakter secara bertahap, baru tantang Floor 11-12. Tidak perlu terburu-buru.' },
+  { q:'Apakah weapon refinement worth it?', a:'Untuk senjata biasa (crafted atau 3★), refinement sangat worth — disarankan sampai R5. Untuk Limited 5★ weapon, biayanya sangat tinggi (butuh 5 senjata yang sama), umumnya tidak disarankan dipaksa. R1 sudah cukup untuk sebagian besar konten.' },
+  { q:'Talent karakter sebaiknya diupgrade sampai level berapa?', a:'Talent Main DPS disarankan ke level 8-9 (utamakan Normal Attack dan skill inti). Karakter support cukup level 6-8. Biaya Talent Material dan Mora sangat besar, jadi di awal tidak perlu kejar level max — pastikan dulu Main DPS-mu kuat.' },
+];
+
+/* ═══════════════════════════════════════════
+   RENDER FUNCTIONS
+═══════════════════════════════════════════ */
+
+function renderTierList() {
+  const tiers = ['s','a','b'];
+  const tierLabel = { s:'S', a:'A', b:'B' };
+  let html = '';
+  tiers.forEach(t => {
+    const cs = CHARS.filter(c => c.tier === t);
+    html += `<div class="tier-block">
+      <div class="tier-row">
+        <div class="tier-badge tier-${t}">${tierLabel[t]}</div>
+        <div class="tier-chars">
+          ${cs.map(c => charCard(c)).join('')}
+        </div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('tier-list').innerHTML = html;
+}
+
+function charCard(c) {
+  const e = ELEM[c.elem];
+  return `<div class="char-card" id="card-${c.id}" onclick="showDetail('${c.id}')">
+    <div class="char-avatar ${e.bg}">
+      ${c.emoji}
+      <div class="elem-dot ${e.dot}" title="${e.name}"></div>
+    </div>
+    <div class="char-name">${c.name}</div>
+    <div class="char-role">${c.role}</div>
+  </div>`;
+}
+
+let openCharId = null;
+function showDetail(id) {
+  const panel = document.getElementById('detail-panel');
+  if (openCharId === id) {
+    panel.classList.remove('open');
+    document.getElementById('card-' + id).classList.remove('selected');
+    openCharId = null;
+    return;
+  }
+  if (openCharId) {
+    const prev = document.getElementById('card-' + openCharId);
+    if (prev) prev.classList.remove('selected');
+  }
+  openCharId = id;
+  const c = CHARS.find(x => x.id === id);
+  const e = ELEM[c.elem];
+  const tierClass = `tag-tier-${c.tier}`;
+  panel.innerHTML = `
+    <div class="dp-header">
+      <div class="dp-avatar ${e.bg}" style="font-size:32px;">${c.emoji}</div>
+      <div class="dp-info">
+        <div class="dp-name">${c.name} ${c.star === 5 ? '★★★★★' : '★★★★'}</div>
+        <div class="dp-tags">
+          <span class="tag ${tierClass}">${c.tier.toUpperCase()} Tier</span>
+          <span class="tag tag-elem" style="color:${e.color};">${e.symbol} ${e.name}</span>
+          <span class="tag tag-role">${c.role}</span>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.7;">${c.desc}</p>
+    <div class="dp-stats">
+      <div class="stat-item"><div class="stat-label">Weapon Type</div><div class="stat-val">${c.weapon}</div></div>
+      <div class="stat-item"><div class="stat-label">Recommended Artifact</div><div class="stat-val">${c.artifact}</div></div>
+      <div class="stat-item"><div class="stat-label">Ascension Stat</div><div class="stat-val">${c.ascend}</div></div>
+      <div class="stat-item"><div class="stat-label">Talent Priority</div><div class="stat-val">${c.talent}</div></div>
+    </div>
+    <div class="dp-synergy">
+      <div class="synergy-title">Recommended Partners</div>
+      <div class="synergy-chips">${c.synergy.map(s => `<span class="synergy-chip">${s}</span>`).join('')}</div>
+    </div>
+    <div class="dp-actions">
+      <button class="btn-primary" onclick="alert('Fitur sedang dalam pengembangan, tunggu ya!')">📖 Panduan Build Lengkap</button>
+      <button class="btn-secondary" onclick="switchPage('team')">🏹 Lihat Rekomendasi Tim</button>
+    </div>
+  `;
+  panel.classList.add('open');
+  document.getElementById('card-' + id).classList.add('selected');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function renderTeams() {
+  const el = document.getElementById('team-list');
+  el.innerHTML = TEAMS.map(t => `
+    <div class="team-card">
+      <div class="team-card-header">
+        <div class="team-title">${t.name}</div>
+        <div class="team-subtitle">${t.sub}</div>
+        <div class="team-rating">${t.rating}</div>
+      </div>
+      <div class="team-slots">
+        ${t.slots.map(s => `
+          <div class="team-slot">
+            <div class="slot-emoji">${s.emoji}</div>
+            <div class="slot-name">${s.name}</div>
+            <div class="slot-role">${s.role}</div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="team-meta">
+        <span class="meta-label">Reaksi Utama</span>
+        ${t.reactions.map(r => {
+          const [cls, label] = r.split(':');
+          return `<span class="reaction-tag ${cls}">${label}</span>`;
+        }).join('')}
+      </div>
+      <p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:14px;">${t.desc}</p>
+      <div style="margin-bottom:14px;">
+        <div style="font-size:12px;color:var(--text3);margin-bottom:8px;">Tips Rotasi</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:5px;">
+          ${t.tips.map((tip,i) => `<li style="font-size:13px;color:var(--text2);display:flex;align-items:baseline;gap:8px;"><span style="color:var(--gold);font-size:11px;flex-shrink:0;">${i+1}.</span>${tip}</li>`).join('')}
+        </ul>
+      </div>
+      <button class="btn-primary" onclick="alert('Panduan lengkap sedang dikerjakan!')">📋 Panduan Rotasi Lengkap</button>
+    </div>
+  `).join('');
+}
+
+function renderAbyss() {
+  const grid = document.getElementById('abyss-grid');
+  grid.innerHTML = ABYSS.map((a,i) => {
+    const s = a.stars;
+    const maxS = 3;
+    return `<div class="abyss-card" onclick="showAbyssDetail(${i})">
+      <div class="abyss-floor">${a.floor}</div>
+      <div class="abyss-sub">Floor</div>
+      <div class="abyss-stars">
+        ${'★'.repeat(s[0])}<span class="empty">${'★'.repeat(maxS-s[0])}</span>
+        &nbsp;
+        ${'★'.repeat(s[1])}<span class="empty">${'★'.repeat(maxS-s[1])}</span>
+      </div>
+      <div class="abyss-diff diff-${a.diff}">${{easy:'Mudah',med:'Menengah',hard:'Sulit'}[a.diff]}</div>
+    </div>`;
+  }).join('');
+}
+
+let openAbyssIdx = null;
+function showAbyssDetail(idx) {
+  const detail = document.getElementById('abyss-detail');
+  if (openAbyssIdx === idx) {
+    detail.classList.remove('open');
+    openAbyssIdx = null;
+    return;
+  }
+  openAbyssIdx = idx;
+  const a = ABYSS[idx];
+  detail.innerHTML = `
+    <div style="font-family:'Cinzel',serif;font-size:16px;color:var(--gold-light);margin-bottom:16px;">Floor ${a.floor} · Detail Konfigurasi</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+      <div class="abyss-half">
+        <div class="abyss-half-title">First Half</div>
+        <div class="enemy-list">
+          ${a.half1.enemies.map(e => `<span class="enemy-chip">${e}</span>`).join('')}
+          ${a.half1.elites.map(e => `<span class="enemy-chip elite">${e}</span>`).join('')}
+        </div>
+      </div>
+      <div class="abyss-half">
+        <div class="abyss-half-title">Second Half</div>
+        <div class="enemy-list">
+          ${a.half2.enemies.map(e => `<span class="enemy-chip">${e}</span>`).join('')}
+          ${a.half2.elites.map(e => `<span class="enemy-chip elite">${e}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="recommended-chars">
+      <div class="rec-label">Karakter yang Direkomendasikan</div>
+      <div class="rec-chips">${a.rec.map(r => `<span class="rec-chip">${r}</span>`).join('')}</div>
+    </div>
+    <button class="btn-primary" style="margin-top:14px;" onclick="alert('Video strategi segera hadir!')">▶ Lihat Strategi Clear</button>
+  `;
+  detail.classList.add('open');
+  detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function renderTips() {
+  document.getElementById('tips-grid').innerHTML = TIPS.map(t => `
+    <div class="tip-card">
+      <div class="tip-icon ${t.cls}">${t.icon}</div>
+      <div class="tip-title">${t.title}</div>
+      <div class="tip-desc">${t.desc}</div>
+      <span class="tip-badge">${t.badge}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('faq').innerHTML = FAQ.map((f,i) => `
+    <div class="faq-item" id="faq-${i}">
+      <div class="faq-q" onclick="toggleFaq(${i})">
+        <span>${f.q}</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>
+    </div>
+  `).join('');
+}
+
+function toggleFaq(i) {
+  document.getElementById('faq-' + i).classList.toggle('open');
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+function switchPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelector(`.nav-tab[data-page="${name}"]`).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══════════════════════════════════════════
+   SEARCH
+═══════════════════════════════════════════ */
+const searchInput = document.getElementById('search-input');
+const searchResults = document.getElementById('search-results');
+
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim().toLowerCase();
+  if (!q) { searchResults.classList.remove('open'); return; }
+  const matches = CHARS.filter(c =>
+    c.name.toLowerCase().includes(q) ||
+    ELEM[c.elem].name.includes(q) ||
+    c.role.toLowerCase().includes(q) ||
+    c.weapon.includes(q)
+  );
+  if (!matches.length) {
+    searchResults.innerHTML = `<div class="sr-empty">Tidak ditemukan hasil yang sesuai</div>`;
+  } else {
+    searchResults.innerHTML = matches.slice(0, 6).map(c => `
+      <div class="sr-item" onclick="handleSearch('${c.id}')">
+        <span class="sr-emoji">${c.emoji}</span>
+        <span>${c.name}</span>
+        <span class="sr-sub">${ELEM[c.elem].name} · ${c.role}</span>
+      </div>
+    `).join('');
+  }
+  searchResults.classList.add('open');
+});
+
+function handleSearch(id) {
+  switchPage('tier');
+  searchInput.value = '';
+  searchResults.classList.remove('open');
+  setTimeout(() => showDetail(id), 100);
+}
+
+document.addEventListener('click', e => {
+  if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+    searchResults.classList.remove('open');
+  }
+});
+
+/* ═══════════════════════════════════════════
+   SCROLL TO TOP
+═══════════════════════════════════════════ */
+const scrollTopBtn = document.getElementById('scroll-top');
+window.addEventListener('scroll', () => {
+  scrollTopBtn.classList.toggle('visible', window.scrollY > 300);
+});
+
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+renderTierList();
+renderTeams();
+renderAbyss();
+renderTips();
+</script>
+</body>
+</html>
